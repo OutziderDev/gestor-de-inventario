@@ -1,0 +1,16 @@
+{
+  "name": "inventari-manager",
+  "version": "1.0.0",
+  "description": "Gestion de inventario para bazar de ventas",
+  "scripts": {
+    "dev": "npx serve .",
+    "deploy": "gh-pages -d ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.0",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
