@@ -87,6 +87,101 @@ nav a.active {
   background: var(--accent-glow);
 }
 
+.btn-reset {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+}
+
+.btn-reset:hover {
+  background: rgba(244, 63, 94, 0.12);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.2);
+}
+
+.btn-reset:active {
+  transform: scale(0.95);
+}
+
+.reset-msg {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.btn-danger {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  background: linear-gradient(135deg, var(--danger), #be123c);
+  color: #fff;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.3);
+}
+
+.btn-danger:active {
+  transform: scale(0.97);
+}
+
+.historial-resumen {
+  margin-top: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.historial-resumen.hidden {
+  display: none;
+}
+
+.resumen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.resumen-row + .resumen-row {
+  border-top: 1px solid var(--border);
+  margin-top: 6px;
+  padding-top: 10px;
+}
+
+.resumen-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.resumen-valor {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.resumen-cantidad {
+  color: var(--accent);
+  font-size: 1rem;
+}
+
 .stats {
   display: flex;
   gap: 12px;

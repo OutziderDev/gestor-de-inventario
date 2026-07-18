@@ -101,12 +101,12 @@
 
     lista.innerHTML = ordenados.map(item => {
       const agotado = item.cantidad <= 0;
-      const precioFmt = item.precio.toLocaleString('es-PY');
+      const precioFmt = item.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       return `
         <div class="item-card ${agotado ? 'agotado' : ''}">
           <div class="item-info">
             <div class="item-name">${item.nombre}</div>
-            <div class="item-price">Gs. ${precioFmt}</div>
+            <div class="item-price">$ ${precioFmt}</div>
           </div>
           <div class="item-right">
             <div class="item-cantidad">${item.cantidad}</div>
@@ -158,9 +158,32 @@
     });
   }
 
+  function initReset() {
+    const btnReset = document.getElementById('btn-reset');
+    const overlay = document.getElementById('reset-overlay');
+    const btnCancelar = document.getElementById('btn-cancelar-reset');
+    const btnConfirmar = document.getElementById('btn-confirmar-reset');
+
+    btnReset.addEventListener('click', () => overlay.classList.add('active'));
+    btnCancelar.addEventListener('click', () => overlay.classList.remove('active'));
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+
+    btnConfirmar.addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(HISTORIAL_KEY);
+      inventario = [];
+      overlay.classList.remove('active');
+      showToast('Inventario y historial limpiados');
+      render();
+    });
+  }
+
   window.__despachar = despachar;
   cargarInventario();
   initModal();
+  initReset();
 
   document.getElementById('input-buscar').addEventListener('input', e => {
     filtro = e.target.value.trim();

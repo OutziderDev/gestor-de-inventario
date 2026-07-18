@@ -11,27 +11,40 @@
     return `${dia}/${mes}/${anio} ${hora}:${min}`;
   }
 
+  function formatDinero(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
   function render() {
     const lista = document.getElementById('lista-historial');
     const historial = JSON.parse(localStorage.getItem(HISTORIAL_KEY) || '[]');
+    const resumen = document.getElementById('historial-resumen');
 
     if (historial.length === 0) {
       lista.innerHTML =
         '<div class="empty-state"><div class="icon">&#128221;</div><p>No hay ventas registradas</p></div>';
+      resumen.classList.add('hidden');
       return;
     }
 
+    let total = 0;
     lista.innerHTML = historial.map(item => {
-      const precioFmt = (item.precio || 0).toLocaleString('es-PY');
+      const subtotal = (item.precio || 0) * (item.cantidad || 1);
+      total += subtotal;
+      const precioFmt = formatDinero(item.precio || 0);
       return `
       <div class="historial-item">
         <div class="historial-info">
           <div class="historial-name">${item.nombre}</div>
-          <div class="historial-time">${formatFecha(item.fecha)} &middot; Gs. ${precioFmt}</div>
+          <div class="historial-time">${formatFecha(item.fecha)} &middot; $ ${precioFmt}</div>
         </div>
         <div class="historial-cantidad">-${item.cantidad}</div>
       </div>`;
     }).join('');
+
+    document.getElementById('historial-total').textContent = `$ ${formatDinero(total)}`;
+    document.getElementById('historial-cantidad-total').textContent = historial.reduce((s, i) => s + (i.cantidad || 0), 0);
+    resumen.classList.remove('hidden');
   }
 
   render();

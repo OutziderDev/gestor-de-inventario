@@ -15,6 +15,7 @@
         <a href="index.html" class="active">Inventario</a>
         <a href="historial.html">Historial</a>
       </nav>
+      <button class="btn-reset" id="btn-reset" title="Limpiar todo el inventario y historial">&#128465; Nueva feria</button>
     </header>
 
     <div class="stats">
@@ -55,8 +56,8 @@
           <input type="text" name="nombre" required placeholder="Ej: Collar de cuarzo">
         </label>
         <label>
-          Precio (Gs.)
-          <input type="number" name="precio" required min="0" placeholder="Ej: 15000">
+          Precio ($)
+          <input type="number" name="precio" required min="0" step="0.01" placeholder="Ej: 10.50">
         </label>
         <label>
           Cantidad
@@ -71,6 +72,17 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <div class="modal-overlay" id="reset-overlay">
+    <div class="modal">
+      <h2>&#9888; Nueva feria</h2>
+      <p class="reset-msg">Se borraran todos los productos del inventario y todo el historial de ventas. Esta accion no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancelar-reset" class="btn-cancelar">Cancelar</button>
+        <button type="button" id="btn-confirmar-reset" class="btn-danger">Limpiar todo</button>
+      </div>
+    </div>
+  </div>
 
   <script src="js/app.js"></script>
 </body>
