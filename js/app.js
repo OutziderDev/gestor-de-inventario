@@ -3,6 +3,7 @@
   const HISTORIAL_KEY = 'bazar_historial';
 
   let inventario = [];
+  let filtro = '';
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
@@ -77,13 +78,21 @@
 
   function render() {
     const lista = document.getElementById('lista-inventario');
-    const disponibles = inventario.filter(i => i.cantidad > 0);
-    const agotados = inventario.filter(i => i.cantidad <= 0);
+    let items = inventario;
+    if (filtro) {
+      const q = filtro.toLowerCase();
+      items = inventario.filter(i => i.nombre.toLowerCase().includes(q));
+    }
+    const disponibles = items.filter(i => i.cantidad > 0);
+    const agotados = items.filter(i => i.cantidad <= 0);
     const ordenados = [...disponibles, ...agotados];
 
     if (ordenados.length === 0) {
+      const msg = filtro
+        ? 'No se encontraron articulos.'
+        : 'Sin articulos. Agrega uno nuevo.';
       lista.innerHTML =
-        '<div class="empty-state"><div class="icon">&#128230;</div><p>Sin articulos. Agrega uno nuevo.</p></div>';
+        `<div class="empty-state"><div class="icon">&#128269;</div><p>${msg}</p></div>`;
       document.getElementById('stat-total').textContent = 0;
       document.getElementById('stat-stock').textContent = 0;
       document.getElementById('stat-despachado').textContent = 0;
@@ -152,4 +161,9 @@
   window.__despachar = despachar;
   cargarInventario();
   initModal();
+
+  document.getElementById('input-buscar').addEventListener('input', e => {
+    filtro = e.target.value.trim();
+    render();
+  });
 })();
