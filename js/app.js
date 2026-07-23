@@ -4,6 +4,7 @@
 
   let inventario = [];
   let filtro = '';
+  let despacharPendiente = null;
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
@@ -180,10 +181,46 @@
     });
   }
 
+  function initDespacharConfirm() {
+    const overlay = document.getElementById('despachar-overlay');
+    const msg = document.getElementById('despachar-msg');
+    const btnCancelar = document.getElementById('btn-cancelar-despachar');
+    const btnConfirmar = document.getElementById('btn-confirmar-despachar');
+
+    window.__despachar = (id) => {
+      const item = inventario.find(i => i.id === id);
+      if (!item || item.cantidad <= 0) return;
+      despacharPendiente = id;
+      msg.textContent = `¿Despachar "${item.nombre}"? Quedarán ${item.cantidad - 1} en stock.`;
+      overlay.classList.add('active');
+    };
+
+    btnCancelar.addEventListener('click', () => {
+      overlay.classList.remove('active');
+      despacharPendiente = null;
+    });
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+        despacharPendiente = null;
+      }
+    });
+
+    btnConfirmar.addEventListener('click', () => {
+      if (despacharPendiente !== null) {
+        despachar(despacharPendiente);
+        despacharPendiente = null;
+      }
+      overlay.classList.remove('active');
+    });
+  }
+
   window.__despachar = despachar;
   cargarInventario();
   initModal();
   initReset();
+  initDespacharConfirm();
 
   document.getElementById('input-buscar').addEventListener('input', e => {
     filtro = e.target.value.trim();
