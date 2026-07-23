@@ -28,22 +28,33 @@
     }
 
     let total = 0;
+    let totalCash = 0;
+    let totalYappy = 0;
     lista.innerHTML = historial.map(item => {
       const subtotal = (item.precio || 0) * (item.cantidad || 1);
       total += subtotal;
+      if (item.metodo === 'yappy') totalYappy += subtotal;
+      else totalCash += subtotal;
       const precioFmt = formatDinero(item.precio || 0);
+      const metodo = item.metodo || 'cash';
+      const metodoLabel = metodo === 'yappy' ? 'Yappy' : 'Cash';
       return `
       <div class="historial-item">
         <div class="historial-info">
           <div class="historial-name">${item.nombre}</div>
           <div class="historial-time">${formatFecha(item.fecha)} &middot; $ ${precioFmt}</div>
         </div>
-        <div class="historial-cantidad">-${item.cantidad}</div>
+        <div class="historial-right">
+          <span class="historial-metodo metodo-${metodo}">${metodoLabel}</span>
+          <div class="historial-cantidad">-${item.cantidad}</div>
+        </div>
       </div>`;
     }).join('');
 
     document.getElementById('historial-total').textContent = `$ ${formatDinero(total)}`;
     document.getElementById('historial-cantidad-total').textContent = historial.reduce((s, i) => s + (i.cantidad || 0), 0);
+    document.getElementById('historial-total-cash').textContent = `$ ${formatDinero(totalCash)}`;
+    document.getElementById('historial-total-yappy').textContent = `$ ${formatDinero(totalYappy)}`;
     resumen.classList.remove('hidden');
   }
 

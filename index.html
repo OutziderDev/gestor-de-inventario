@@ -73,6 +73,28 @@
 
   <div class="toast" id="toast"></div>
 
+  <div class="modal-overlay" id="despachar-overlay">
+    <div class="modal">
+      <h2>&#128270; Confirmar despacho</h2>
+      <p class="reset-msg" id="despachar-msg">¿Estás seguro de despachar este producto?</p>
+      <div class="metodo-pago-label">Metodo de cobro</div>
+      <div class="metodo-pago-options">
+        <button type="button" class="metodo-pago-btn selected" id="btn-metodo-cash" data-method="cash">
+          <span class="metodo-icon">&#128176;</span>
+          <span class="metodo-name">Cash</span>
+        </button>
+        <button type="button" class="metodo-pago-btn" id="btn-metodo-yappy" data-method="yappy">
+          <span class="metodo-icon">&#128178;</span>
+          <span class="metodo-name">Yappy</span>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancelar-despachar" class="btn-cancelar">Cancelar</button>
+        <button type="button" id="btn-confirmar-despachar" class="btn-guardar">Despachar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="reset-overlay">
     <div class="modal">
       <h2>&#9888; Nueva feria</h2>
