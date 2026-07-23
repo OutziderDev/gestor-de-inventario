@@ -5,6 +5,7 @@
   let inventario = [];
   let filtro = '';
   let despacharPendiente = null;
+  let metodoPago = 'cash';
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
@@ -41,26 +42,27 @@
       });
   }
 
-  function registrarHistorial(item, cantidad) {
+  function registrarHistorial(item, cantidad, metodo) {
     const historial = JSON.parse(localStorage.getItem(HISTORIAL_KEY) || '[]');
     historial.unshift({
       id: item.id,
       nombre: item.nombre,
       precio: item.precio,
       cantidad: cantidad,
+      metodo: metodo || 'cash',
       fecha: new Date().toISOString()
     });
     localStorage.setItem(HISTORIAL_KEY, JSON.stringify(historial));
   }
 
-  function despachar(id) {
+  function despachar(id, metodo) {
     const item = inventario.find(i => i.id === id);
     if (!item || item.cantidad <= 0) return;
 
     item.cantidad--;
     guardarInventario();
-    registrarHistorial(item, 1);
-    showToast(`Vendido: ${item.nombre}`);
+    registrarHistorial(item, 1, metodo);
+    showToast(`Vendido: ${item.nombre} (${metodo})`);
     render();
   }
 
@@ -186,11 +188,23 @@
     const msg = document.getElementById('despachar-msg');
     const btnCancelar = document.getElementById('btn-cancelar-despachar');
     const btnConfirmar = document.getElementById('btn-confirmar-despachar');
+    const btnCash = document.getElementById('btn-metodo-cash');
+    const btnYappy = document.getElementById('btn-metodo-yappy');
+
+    function seleccionarMetodo(metodo) {
+      metodoPago = metodo;
+      btnCash.classList.toggle('selected', metodo === 'cash');
+      btnYappy.classList.toggle('selected', metodo === 'yappy');
+    }
+
+    btnCash.addEventListener('click', () => seleccionarMetodo('cash'));
+    btnYappy.addEventListener('click', () => seleccionarMetodo('yappy'));
 
     window.__despachar = (id) => {
       const item = inventario.find(i => i.id === id);
       if (!item || item.cantidad <= 0) return;
       despacharPendiente = id;
+      seleccionarMetodo('cash');
       msg.textContent = `¿Despachar "${item.nombre}"? Quedarán ${item.cantidad - 1} en stock.`;
       overlay.classList.add('active');
     };
@@ -209,7 +223,7 @@
 
     btnConfirmar.addEventListener('click', () => {
       if (despacharPendiente !== null) {
-        despachar(despacharPendiente);
+        despachar(despacharPendiente, metodoPago);
         despacharPendiente = null;
       }
       overlay.classList.remove('active');

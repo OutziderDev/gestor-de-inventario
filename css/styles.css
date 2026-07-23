@@ -182,6 +182,16 @@ nav a.active {
   font-size: 1rem;
 }
 
+.resumen-cash {
+  color: var(--success);
+  font-size: 1rem;
+}
+
+.resumen-yappy {
+  color: #a78bfa;
+  font-size: 1rem;
+}
+
 .stats {
   display: flex;
   gap: 12px;
@@ -412,6 +422,31 @@ nav a.active {
   border-radius: 20px;
 }
 
+.historial-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.historial-metodo {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.metodo-cash {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--success);
+}
+
+.metodo-yappy {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+}
+
 .toast {
   position: fixed;
   bottom: 24px;
@@ -573,6 +608,54 @@ nav a.active {
 
 .btn-guardar:active {
   transform: scale(0.97);
+}
+
+/* Metodo de pago */
+.metodo-pago-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.metodo-pago-options {
+  display: flex;
+  gap: 10px;
+}
+
+.metodo-pago-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.metodo-pago-btn:hover {
+  border-color: var(--text-secondary);
+}
+
+.metodo-pago-btn.selected {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--text-primary);
+}
+
+.metodo-icon {
+  font-size: 1.4rem;
+}
+
+.metodo-name {
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 @media (max-width: 400px) {
