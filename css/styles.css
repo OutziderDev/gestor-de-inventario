@@ -75,7 +75,7 @@ nav a {
   text-decoration: none;
   font-size: 0.8rem;
   padding: 6px 16px;
-  border-radius: 20px;
+  border-radius: calc( (var(--radius) / 2) + 2px);
   border: 1px solid var(--border);
   transition: var(--transition);
 }
@@ -94,7 +94,7 @@ nav a.active {
   background: transparent;
   color: var(--danger);
   border: 1px solid var(--danger);
-  border-radius: 20px;
+  border-radius: calc( (var(--radius) / 2) + 2px);
   font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
@@ -111,27 +111,78 @@ nav a.active {
   transform: scale(0.95);
 }
 
-.btn-install {
-  display: inline-block;
-  margin-top: 14px;
-  padding: 6px 14px;
-  background: transparent;
-  color: var(--success);
+.install-prompt {
+  position: fixed;
+  bottom: 24px;
+  left: 16px;
+  background: var(--bg-card);
   border: 1px solid var(--success);
-  border-radius: 20px;
-  font-size: 0.75rem;
+  border-radius: 8px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow), 0 0 16px rgba(52, 211, 153, 0.15);
+  opacity: 0;
+  transform: translateY(80px);
+  transition: all 0.3s ease;
+  z-index: 100;
+  pointer-events: none;
+  max-width: 260px;
+}
+
+.install-prompt.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.install-prompt-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.install-prompt-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.install-btn-yes,
+.install-btn-no {
+  flex: 1;
+  padding: 7px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
-  letter-spacing: 0.02em;
 }
 
-.btn-install:hover {
-  background: rgba(52, 211, 153, 0.12);
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.2);
+.install-btn-yes {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: #fff;
 }
 
-.btn-install:active {
+.install-btn-yes:hover {
+  box-shadow: 0 0 14px rgba(52, 211, 153, 0.3);
+}
+
+.install-btn-yes:active {
+  transform: scale(0.95);
+}
+
+.install-btn-no {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.install-btn-no:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.install-btn-no:active {
   transform: scale(0.95);
 }
 

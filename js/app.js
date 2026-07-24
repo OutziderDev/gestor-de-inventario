@@ -242,28 +242,37 @@
   });
 
   let deferredPrompt;
-  const btnInstall = document.getElementById('btn-install');
+  const installPrompt = document.getElementById('install-prompt');
+  const installYes = document.getElementById('install-yes');
+  const installNo = document.getElementById('install-no');
 
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
-    btnInstall.style.display = 'inline-block';
+    if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) return;
+    if (sessionStorage.getItem('install_dismissed')) return;
+    installPrompt.classList.add('show');
   });
 
-  btnInstall.addEventListener('click', () => {
+  installYes.addEventListener('click', () => {
     if (!deferredPrompt) return;
+    installPrompt.classList.remove('show');
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(choice => {
       if (choice.outcome === 'accepted') {
-        btnInstall.style.display = 'none';
         showToast('App instalada correctamente');
       }
       deferredPrompt = null;
     });
   });
 
+  installNo.addEventListener('click', () => {
+    installPrompt.classList.remove('show');
+    sessionStorage.setItem('install_dismissed', '1');
+  });
+
   window.addEventListener('appinstalled', () => {
-    btnInstall.style.display = 'none';
+    installPrompt.classList.remove('show');
     deferredPrompt = null;
   });
 

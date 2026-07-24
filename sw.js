@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bazar-v1';
+const CACHE_NAME = 'bazar-v2';
 const BASE = self.location.pathname.replace(/\/sw\.js$/, '/');
 const ASSETS = [
   BASE,
