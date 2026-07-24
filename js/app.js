@@ -240,4 +240,34 @@
     filtro = e.target.value.trim();
     render();
   });
+
+  let deferredPrompt;
+  const btnInstall = document.getElementById('btn-install');
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    btnInstall.style.display = 'inline-block';
+  });
+
+  btnInstall.addEventListener('click', () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(choice => {
+      if (choice.outcome === 'accepted') {
+        btnInstall.style.display = 'none';
+        showToast('App instalada correctamente');
+      }
+      deferredPrompt = null;
+    });
+  });
+
+  window.addEventListener('appinstalled', () => {
+    btnInstall.style.display = 'none';
+    deferredPrompt = null;
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
 })();
